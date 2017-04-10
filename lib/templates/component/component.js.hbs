@@ -1,0 +1,27 @@
+import {{#if interactive}}Interactive{{/if}}Component from 'brindille{{#if interactive}}-interactive{{/if}}-component'
+
+export default class {{ComponentName}} extends {{#if interactive}}Interactive{{/if}}Component {
+  constructor ($el) {
+    super($el)
+
+    // Method bindings
+
+    // Dom nodes registering
+
+    // Event listeners
+  }
+
+  {{#if section}}
+  transitionIn (callback) {
+    setTimeout(callback)
+  }
+
+  transitionOut (callback) {
+    setTimeout(callback)
+  }
+
+  {{/if}}
+  dispose () {
+    super.dispose()
+  }
+}

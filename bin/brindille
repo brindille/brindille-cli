@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+const prog = require('caporal')
+const path = require('path')
+const kebab = require('lodash.kebabcase')
+const Metalsmith = require('metalsmith')
+const inPlace = require('metalsmith-in-place')
+const rename = require('metalsmith-rename')
+
+function component (args, options, logger, type = 'components') {
+  const name = args.name
+  const kebabName = kebab(name)
+  const dir = process.cwd() + '/src/views/' + type + '/' + kebabName // Maybe try a better way to call folder of current project
+
+  logger.info(options)
+
+  Metalsmith(__dirname)
+    .metadata({
+      ComponentName: name,
+      section: type === 'sections',
+      interactive: options.interactive
+    })
+    .source(path.join(__dirname, '../lib/templates/component'))
+    .destination(dir)
+    .use(inPlace())
+    .use(rename([
+      [/component.js$/, name + '.js'],
+      [/component/, kebabName]
+    ]))
+    .build(function (err) {
+      if (err) throw err
+    })
+  logger.info('Component ' + name + ' was created!')
+}
+
+function layout (args, options, logger) {
+  component(args, options, logger, 'layouts')
+}
+
+function section (args, options, logger) {
+  component(args, options, logger, 'sections')
+}
+
+prog
+  .version('1.0.0')
+  .command('component', 'Scaffolds a component')
+    .argument('<name>', 'Name of the component', /([A-Z])\w+/)
+    .option('--interactive', 'To make the component interactive')
+    .action(component)
+  .command('section', 'Scaffolds a section')
+    .argument('<name>', 'Name of the component', /([A-Z])\w+/)
+    .action(section)
+  .command('layout', 'Scaffolds a layout')
+    .argument('<name>', 'Name of the component', /([A-Z])\w+/)
+    .action(layout)
+
+prog.parse(process.argv)
