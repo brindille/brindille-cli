@@ -1,35 +1,14 @@
 #!/usr/bin/env node
 const prog = require('caporal')
-const path = require('path')
-const kebab = require('lodash.kebabcase')
-const Metalsmith = require('metalsmith')
-const inPlace = require('metalsmith-in-place')
-const rename = require('metalsmith-rename')
+const chalk = require('chalk')
+const scaffold = require('../lib/scaffold')
+const browserify = require('../lib/browserify')
+const stylus = require('../lib/stylus')
+const createLogger = require('../lib/utils/logger').createLogger
 
 function component (args, options, logger, type = 'components') {
-  const name = args.name
-  const kebabName = kebab(name)
-  const dir = process.cwd() + '/src/views/' + type + '/' + kebabName // Maybe try a better way to call folder of current project
-
-  logger.info(options)
-
-  Metalsmith(__dirname)
-    .metadata({
-      ComponentName: name,
-      section: type === 'sections',
-      interactive: options.interactive
-    })
-    .source(path.join(__dirname, '../lib/templates/component'))
-    .destination(dir)
-    .use(inPlace())
-    .use(rename([
-      [/component.js$/, name + '.js'],
-      [/component/, kebabName]
-    ]))
-    .build(function (err) {
-      if (err) throw err
-    })
-  logger.info('Component ' + name + ' was created!')
+  logger.info('\n' + chalk.blue('⊧Brindille'))
+  scaffold({name: args.name, type: type, interactive: options.interactive}, logger)
 }
 
 function layout (args, options, logger) {
@@ -40,8 +19,27 @@ function section (args, options, logger) {
   component(args, options, logger, 'sections')
 }
 
+function watch (args, options, logger) {
+  logger.info('\n' + chalk.blue('⊧Brindille'))
+  browserify('src/index.js', {isProd: false, transforms: args.transforms}, logger)
+  stylus('src/stylus/main.styl', {isProd: false}, logger)
+}
+
+function build (args, options, logger) {
+  logger.info('\n' + chalk.blue('⊧Brindille'))
+  browserify('src/index.js', {isProd: true, transforms: args.transforms}, logger)
+  stylus('src/stylus/main.styl', {isProd: true}, logger)
+}
+
 prog
   .version('1.0.0')
+  .logger(createLogger())
+  .command('watch', 'Launches a dev watch process compiling both JS and Stylus')
+    .action(watch)
+    .argument('[transforms...]', 'Browserify transforms')
+  .command('build', 'Builds and minifies JS and Stylus')
+    .action(build)
+    .argument('[transforms...]', 'Browserify transforms')
   .command('component', 'Scaffolds a component')
     .argument('<name>', 'Name of the component', /([A-Z])\w+/)
     .option('--interactive', 'To make the component interactive')
