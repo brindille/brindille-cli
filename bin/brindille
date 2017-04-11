@@ -32,7 +32,7 @@ function build (args, options, logger) {
 }
 
 prog
-  .version('1.0.0')
+  .version('1.0.1')
   .logger(createLogger())
   .command('watch', 'Launches a dev watch process compiling both JS and Stylus')
     .action(watch)
