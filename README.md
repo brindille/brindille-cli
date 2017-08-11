@@ -1,5 +1,5 @@
 # brindille-cli
-A CLI tool to help you build Brindille apps.
+A very opiniated CLI tool to help you build Brindille apps.
 
 ![Snapshot](help.png)
 

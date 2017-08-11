@@ -1,6 +1,6 @@
 {
   "name": "brindille-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Cli for Brindille",
   "bin": {
     "brindille": "./bin/brindille"
@@ -29,6 +29,7 @@
     "stylus": "^0.54.5",
     "stylus-font-face": "^1.1.1",
     "uglify-js": "^2.8.22",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "watchify-middleware": "^1.6.0"
   }
 }
