@@ -4,10 +4,12 @@ const chalk = require('chalk')
 const scaffold = require('../lib/scaffold')
 const browserify = require('../lib/browserify')
 const stylus = require('../lib/stylus')
-const createLogger = require('../lib/utils/logger').createLogger
+const loggerUtils = require('../lib/utils/logger')
+const createLogger = loggerUtils.createLogger
+const printHeader = loggerUtils.printHeader
 
 function component (args, options, logger, type = 'components') {
-  logger.info('\n' + chalk.blue('⊧Brindille'))
+  printHeader(logger)
   scaffold({name: args.name, type: type, interactive: options.interactive}, logger)
 }
 
@@ -20,13 +22,13 @@ function section (args, options, logger) {
 }
 
 function watch (args, options, logger) {
-  logger.info('\n' + chalk.blue('⊧Brindille'))
+  printHeader(logger)
   browserify('src/index.js', {isProd: false, transforms: args.transforms}, logger)
   stylus('src/stylus/main.styl', {isProd: false}, logger)
 }
 
 function build (args, options, logger) {
-  logger.info('\n' + chalk.blue('⊧Brindille'))
+  printHeader(logger)
   browserify('src/index.js', {isProd: true, transforms: args.transforms}, logger)
   stylus('src/stylus/main.styl', {isProd: true}, logger)
 }
