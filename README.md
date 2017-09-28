@@ -11,10 +11,10 @@ npm install -g brindille-cli
 ## Use
 From the root of your brindille project in the terminal:
 ```sh
-# launches watchify and stylus in watch mode
+# launches lint (standardjs) watchify and stylus in watch mode
 brindille watch
 
-# launches watchify and stylus in build mode
+# launches lint (standardjs) watchify and stylus in build mode
 brindille build
 
 # scaffolds a MyCompName component in /src/views/components/my-comp-name
@@ -28,7 +28,7 @@ brindille section MySection
 ```
 
 ### Builders
-The `watch` and `build` tasks are just wrappers around [stylus](http://stylus-lang.com/) and [browserify](http://browserify.org/) with our default configuration and a prettier console output.
+The `watch` and `build` tasks are just wrappers around [standardjs](https://standardjs.com/) linting [stylus](http://stylus-lang.com/) and [browserify](http://browserify.org/) with our default configuration and a prettier console output. Error and linting compilations will also be printed directly in the browser (by "replacing" the js built file).
 
 You can optionnaly add browserify transforms to both `watch` and `build` tasks :
 ```sh
