@@ -9,7 +9,12 @@ export default class {{ComponentName}} extends {{#if interactive}}Interactive{{/
     // Dom nodes registering
 
     // Event listeners
+    this.addEvents()
   }
+
+  addEvents () {}
+
+  removeEvents () {}
 
   {{#if section}}
   transitionIn (callback) {
@@ -22,6 +27,7 @@ export default class {{ComponentName}} extends {{#if interactive}}Interactive{{/
 
   {{/if}}
   dispose () {
+    this.removeEvents()
     super.dispose()
   }
 }
