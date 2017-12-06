@@ -33,7 +33,7 @@
     "standard": "^10.0.3",
     "stylus": "^0.54.5",
     "stylus-font-face": "^1.1.1",
-    "uglify-js": "^3.2.1",
+    "uglify-js": "2.8.22",
     "watchify-middleware": "^1.6.0"
   }
 }
