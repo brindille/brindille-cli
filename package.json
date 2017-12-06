@@ -1,9 +1,13 @@
 {
   "name": "brindille-cli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Cli for Brindille",
   "bin": {
     "brindille": "./bin/brindille"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brindille/brindille-cli.git"
   },
   "author": {
     "name": "Guillaume Gouessan",
@@ -29,7 +33,7 @@
     "standard": "^10.0.3",
     "stylus": "^0.54.5",
     "stylus-font-face": "^1.1.1",
-    "tinyify": "^2.3.0",
+    "uglify-js": "^3.2.1",
     "watchify-middleware": "^1.6.0"
   }
 }
