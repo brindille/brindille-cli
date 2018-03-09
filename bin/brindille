@@ -23,14 +23,14 @@ function section (args, options, logger) {
 
 function watch (args, options, logger) {
   printHeader(logger)
-  browserify('src/index.js', {isProd: false, transforms: args.transforms}, logger)
-  stylus('src/stylus/main.styl', {isProd: false}, logger)
+  browserify('src/index.js', Object.assign({isProd: false, transforms: args.transforms}, options), logger)
+  stylus('src/stylus/main.styl', Object.assign({isProd: false}, options), logger)
 }
 
 function build (args, options, logger) {
   printHeader(logger)
-  browserify('src/index.js', {isProd: true, transforms: args.transforms}, logger)
-  stylus('src/stylus/main.styl', {isProd: true}, logger)
+  browserify('src/index.js', Object.assign({isProd: true, transforms: args.transforms}, options), logger)
+  stylus('src/stylus/main.styl', Object.assign({isProd: true}, options), logger)
 }
 
 prog
@@ -38,9 +38,11 @@ prog
   .logger(createLogger())
   .command('watch', 'Launches a dev watch process compiling both JS and Stylus')
     .action(watch)
+    .option('--output', 'Path where the built files will go (default "public/build")')
     .argument('[transforms...]', 'Browserify transforms')
   .command('build', 'Builds and minifies JS and Stylus')
     .action(build)
+    .option('--output', 'Path where the built files will go (default "public/build")')
     .argument('[transforms...]', 'Browserify transforms')
   .command('component', 'Scaffolds a component')
     .argument('<name>', 'Name of the component', /([A-Z])\w+/)
